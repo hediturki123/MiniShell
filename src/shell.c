@@ -12,6 +12,7 @@
 int main()
 {
 	pid_t pid;
+	int status;
 	while (1) {
 		struct cmdline *l;
 		int i, j;
@@ -46,7 +47,12 @@ int main()
 					pid=fork();
     				if(pid==0){
 						execvp(cmd[0],cmd);
-					} else {/*je sais pas quoi mettre ici*/}
+					} else {
+						if(waitpid(pid,&status,0)==-1){
+							printf("error");
+							exit(-1);
+						}
+					}
 				}
 				//printf("\n");
 			}
