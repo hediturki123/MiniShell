@@ -8,8 +8,10 @@
 #include "csapp.h"
 
 
+
 int main()
 {
+	pid_t pid;
 	while (1) {
 		struct cmdline *l;
 		int i, j;
@@ -38,11 +40,15 @@ int main()
 			if (strcmp(cmd[0],"quit")==0){
 					exit(0);
 			} else {
-				printf("seq[%d]: ", i);
+				//printf("seq[%d]: ", i);
 				for (j=0; cmd[j]!=0; j++) {
-					printf("%s ", cmd[j]);
+					//printf("%s ", cmd[j]);
+					pid=fork();
+    				if(pid==0){
+						execvp(cmd[0],cmd);
+					} else {/*je sais pas quoi mettre ici*/}
 				}
-				printf("\n");
+				//printf("\n");
 			}
 		}
 	}
