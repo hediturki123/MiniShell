@@ -11,11 +11,12 @@
 
 int main()
 {
-	pid_t pid;
-	int status;
 	while (1) {
 		struct cmdline *l;
 		int i, j;
+		pid_t pid;
+		int status;
+		int out=1;
 
 		printf("shell> ");
 		l = readcmd();
@@ -33,7 +34,10 @@ int main()
 		}
 
 		if (l->in) printf("in: %s\n", l->in);
-		if (l->out) printf("out: %s\n", l->out);
+		if (l->out) {
+			printf("out: %s\n", l->out);
+			out=open(l->out,O_WRONLY|O_CREAT);//on peut rajouter des choses
+		}
 
 		/* Display each command of the pipe */
 		for (i=0; l->seq[i]!=0; i++) {
@@ -53,8 +57,12 @@ int main()
 							exit(-1);
 						}
 					}
+					
 				}
-				//printf("\n");
+				if (out){
+					dup2(1,out);
+					close(out);
+				}
 			}
 		}
 	}
