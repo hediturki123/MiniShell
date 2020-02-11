@@ -16,7 +16,6 @@ int main()
 		int i, j;
 		pid_t pid;
 		int status;
-		int out=1;
 
 		printf("shell> ");
 		l = readcmd();
@@ -33,11 +32,8 @@ int main()
 			continue;
 		}
 
-		if (l->in) printf("in: %s\n", l->in);
-		if (l->out) {
-			printf("out: %s\n", l->out);
-			out=open(l->out,O_WRONLY|O_CREAT);//on peut rajouter des choses
-		}
+		
+		
 
 		/* Display each command of the pipe */
 		for (i=0; l->seq[i]!=0; i++) {
@@ -50,6 +46,20 @@ int main()
 					//printf("%s ", cmd[j]);
 					pid=fork();
     				if(pid==0){
+						
+						if (l->in){
+							printf("in: %s\n", l->in);
+							int in=open(l->in,O_RDONLY| O_CREAT,0666);
+							Dup2(in,0);
+							printf("\n");
+						}
+
+						if (l->out) {
+							printf("out: %s\n", l->out);
+							int out=open(l->out,O_WRONLY| O_CREAT,0666);
+							Dup2(out,1);
+						}
+
 						execvp(cmd[0],cmd);
 					} else {
 						if(waitpid(pid,&status,0)==-1){
@@ -58,10 +68,6 @@ int main()
 						}
 					}
 					
-				}
-				if (out){
-					dup2(1,out);
-					close(out);
 				}
 			}
 		}
