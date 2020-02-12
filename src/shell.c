@@ -23,7 +23,7 @@ int main()
 		pid_t pid;
 		int status;
 		int tube[2];
-		int tube2[2];
+		//int tube2[2];
 
 		printf("shell> ");
 		l = readcmd();
@@ -41,15 +41,15 @@ int main()
 			char **cmd = l->seq[i];
 			if (strcmp(cmd[0],"quit")==0){
 				exit(0);
-			}
+			}/*
 			if(i!=0 && l->seq[i-1]!=0){ // création du deuxième tube si plus de un tube
 				if (pipe(tube2) == -1){
-						perror("pipe2 error");
+						perror("pipe2 error\n");
 					}	
-			}
-			if(l->seq[i]!=0){ // création du tube si pipe
+			}*/
+			if(l->seq[i+1] != 0){ // création du tube si pipe
 				if (pipe(tube) == -1){
-						perror("pipe error");
+						perror("pipe error\n");
 					}
 			}
 			pid=fork();
@@ -78,7 +78,11 @@ int main()
 					close(tube[0]); //ferme sortie tube
 					Dup2(tube[1],1);
 				}
-				if (execvp(cmd[0],cmd)==-1) { //remplace le l->err
+				if(i!=0){ // s'il y a une commande précédente
+					close(tube[1]);
+					Dup2(tube[0],0);
+				}
+				if (execvp(cmd[0],cmd)==-1) { //remplace le l->err et execute execvp
 					/* Syntax error, read another command */
 					perror(cmd[0]);
 				}
@@ -88,9 +92,8 @@ int main()
 					printf("error\n");
 					exit(-1);
 				}
-				if(l->seq[i+1]!=0){
+				if(l->seq[i+1]!=0){ // s'il y a une commande précédente
 					close(tube[1]);
-					Dup2(tube[0],0);
 				}
 			}
 		}
