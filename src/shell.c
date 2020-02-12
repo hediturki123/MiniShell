@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2002, Simon Nieuviarts
+ Projet SR : TURKI SANEKLI Hedi & NOEL-LARDIN Thomas
  */
 /********************************************************************
  * Régler le problème d'affichage des erreurs (command not found) et cat d'un mauvais fichier s'affiche 2 fois
