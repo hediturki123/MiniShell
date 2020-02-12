@@ -15,9 +15,14 @@
 #include "csapp.h"
 
 
+void handler(int sig){
+	while(waitpid(-1, NULL, WNOHANG|WUNTRACED) > 0){}
+}
+
 
 int main()
 {
+	Signal(SIGCHLD,handler);
 	while (1) {
 		struct cmdline *l;
 		int i;
