@@ -108,9 +108,11 @@ int main()
 				tube[0]=tube2[0];
 				tube[1]=tube2[1];
 
-				if(waitpid(pid,&status,0)==-1){
-					printf("error\n");
-					exit(-1);
+				if (l->ampersand == 0){
+					if(waitpid(pid,&status,0)==-1){
+						printf("error\n");
+						exit(-1);
+					}
 				}
 			}
 		}
