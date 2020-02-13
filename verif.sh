@@ -1,5 +1,5 @@
 ############################################################
-#	Attendu le mini shell ne prend pas en compte les "
+#	Attendion le mini shell ne prend pas en compte les "
 ############################################################
 affiche(){
 	echo " ########## Résultat ########## "
