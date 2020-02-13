@@ -1,0 +1,4 @@
+#
+# Test cat Makefile | grep all
+#
+cat Makefile | grep all

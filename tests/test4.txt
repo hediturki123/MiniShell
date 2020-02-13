@@ -1,0 +1,4 @@
+#
+# Test cat Makefile | grep % | cut -d( -f2 | cut -d) -f1
+#
+cat Makefile | grep % | cut -d( -f2 | cut -d) -f1

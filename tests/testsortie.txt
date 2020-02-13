@@ -1,0 +1,4 @@
+#
+# echo thomas > sortie.txt
+#
+echo thomas > sortie.txt

@@ -7,3 +7,4 @@ sortie.txt
 src
 tests
 verif.sh
+Thomas

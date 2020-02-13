@@ -1,0 +1,4 @@
+#
+# Test cat < Makefile
+#
+cat < Makefile
