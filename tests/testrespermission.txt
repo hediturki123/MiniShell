@@ -1,0 +1,1 @@
+tests/testpermission.txt: Permission denied
