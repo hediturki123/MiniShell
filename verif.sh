@@ -1,5 +1,6 @@
 ############################################################
 #	Attendion le mini shell ne prend pas en compte les "
+#	Modifier les permissions du fichier testpermission
 ############################################################
 affiche(){
 	echo " ########## Résultat ########## "
