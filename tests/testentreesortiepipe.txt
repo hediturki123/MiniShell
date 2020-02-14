@@ -1,0 +1,4 @@
+#
+# Test cat < Makefile | grep % | cut -d( -f2 | cut -d) -f1 > sortie.txt
+#
+cat < Makefile | grep % | cut -d( -f2 | cut -d) -f1 > sortie.txt
