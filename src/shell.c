@@ -1,11 +1,7 @@
 /*
  Projet SR : TURKI SANEKLI Hedi & NOEL-LARDIN Thomas
  */
-/********************************************************************
- * Régler le problème d'affichage des erreurs (command not found) et cat d'un mauvais fichier s'affiche 2 fois
- * 
- * 
- ******************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
