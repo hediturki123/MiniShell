@@ -61,6 +61,25 @@ else
 	cmpV=$((cmpV+1))
 fi
 NbTest=$((NbTest+1))
+# Test permission
+echo "**********************************************"
+echo "*   Test du fichier sans permission          *"
+echo "**********************************************"
+
+echo $(./sdriver.pl -t tests/testpermission.txt -s ./shell | head -n -1 | sed "1,3d") > entree.txt
+
+test=$(diff tests/testrespermission.txt entree.txt)
+
+if [[ -n $test ]]
+then
+	echo "   --------- Test faux ---------"
+	cmpF=$((cmpF+1))
+else
+	echo "   --------- Test OK ---------"
+	cmpV=$((cmpV+1))
+fi
+NbTest=$((NbTest+1))
+
 # Test >
 echo "**********************************************"
 echo "*   Test du fichier de redirection sortie    *"
@@ -82,5 +101,26 @@ else
 	cmpV=$((cmpV+1))
 fi
 NbTest=$((NbTest+1))
+# Test entree sortie pipe
+echo "*******************************************************"
+echo "*   Test du fichier redirection entree sortie pipe    *"
+echo "*******************************************************"
+header=$(./sdriver.pl -t tests/testentreesortiepipe.txt -s ./shell | head -3)
+echo "$header"
+
+echo $(./sdriver.pl -t tests/testentreesortiepipe.txt -s ./shell | head -n -1 | sed "1,3d")
+
+test=$(diff sortie.txt tests/testresentreesortiepipe.txt)
+
+if [[ -n $test ]]
+then
+	echo "   --------- Test faux ---------"
+	cmpF=$((cmpF+1))
+else
+	echo "   --------- Test OK ---------"
+	cmpV=$((cmpV+1))
+fi
+NbTest=$((NbTest+1))
+
 echo
 echo "Nombre total de Test : $NbTest Test Réussi : $cmpV    Test Echoué : $cmpF"
