@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2002, Simon Nieuviarts
  Projet SR : TURKI SANEKLI Hedi & NOEL-LARDIN Thomas
  */
 /********************************************************************
@@ -24,7 +23,7 @@ void handler(int sig){
 
 int main()
 {
-	Signal(SIGCHLD,handler);
+	signal(SIGCHLD,handler);
 	while (1) {
 		struct cmdline *l;
 		int i;
