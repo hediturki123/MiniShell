@@ -14,6 +14,8 @@
 #include "readcmd.h"
 #include "csapp.h"
 
+#define ENTREE 1
+#define SORTIE 0
 
 void handler(int sig){
 	while(waitpid(-1, NULL, WNOHANG|WUNTRACED) > 0){}
@@ -39,8 +41,7 @@ int main()
 			printf("exit\n");
 			exit(0);
 		}
-		
-		
+
 
 		/* Display each command of the pipe */
 		for (i=0; l->seq[i]!=0; i++) {
@@ -50,9 +51,7 @@ int main()
 			}
 			if (pipe(tube2) == -1){
 					perror("pipe2 error\n");
-			}	
-			
-			
+			}
 			pid=fork();
     		if(pid==0){
 				//printf("cmd= %s ", l->seq[i][0]);
@@ -76,25 +75,25 @@ int main()
 				}
 				
 				if(i==0 && l->seq[i+1]==0){
-					close(tube2[0]);
-					close(tube2[1]);
+					close(tube2[SORTIE]);
+					close(tube2[ENTREE]);
 				}
 
 				if(i==0 && l->seq[i+1]!=0){
-					close(tube2[0]); //ferme sortie tube
-					Dup2(tube2[1],1); // entrée tube dans sortie standard
+					close(tube2[SORTIE]); //ferme sortie tube
+					Dup2(tube2[ENTREE],1); // entrée tube dans sortie standard
 				}
 
 				if(i!=0 && l->seq[i+1]==0){ // s'il y a une commande précédente
-					close(tube[1]);
-					Dup2(tube[0],0); // sortie tube dans entrée standard
+					close(tube[ENTREE]);
+					Dup2(tube[SORTIE],0); // sortie tube dans entrée standard
 				}
 				
 				if(i!=0 && l->seq[i+1]!=0){ 
-					close(tube[1]);
-					Dup2(tube[0],0);
-					close(tube2[0]);
-					Dup2(tube2[1],1);
+					close(tube[ENTREE]);
+					Dup2(tube[SORTIE],0);
+					close(tube2[SORTIE]);
+					Dup2(tube2[ENTREE],1);
 				}
 
 				if (execvp(cmd[0],cmd)==-1) { //remplace le l->err et execute execvp
@@ -105,14 +104,14 @@ int main()
 			} else { // père
 				
 				if(tube[0]!=-1) {
-					close(tube[0]);
+					close(tube[SORTIE]);
 				}
 				if(tube[1]!=-1) {
-					close(tube[1]);
+					close(tube[ENTREE]);
 				}
 
-				tube[0]=tube2[0];
-				tube[1]=tube2[1];
+				tube[SORTIE]=tube2[SORTIE];
+				tube[ENTREE]=tube2[ENTREE];
 
 				if (l->ampersand == 0){
 					if(waitpid(pid,&status,0)==-1){
