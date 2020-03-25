@@ -1,25 +1,38 @@
 # mini-shell
 
-## Commande pour terminer le shell
+### 1. Commande pour terminer le shell
 ```
 shell> quit
 ```
 
-## Interprétation de commande simple
+### 2. Interprétation de commande simple
+* ls
+* cat
+* clear
+* ...
 
-## Commande avec redirection d’entrée ou de sortie
+### 3. Commande avec redirection d’entrée ou de sortie
 ```
 shell> ls > test.txt
 ```
-## Gestion des erreurs
 
-## Séquence de commandes composée de deux commandes reliées par un tube
+### 4. Gestion des erreurs
 
-## Séquence de commandes composée de plusieurs commandes et plusieurs tubes
 
-## Exécution de commandes en arrière-plan
+### 5. Séquence de commandes composée de deux commandes reliées par un tube
+```
+ls | wc -l
+```
+
+### 6. Séquence de commandes composée de plusieurs commandes et plusieurs tubes
+```
+ ls -l | grep 2018 | wc -l
+```
+
+### 7. Exécution de commandes en arrière-plan
 
 ```
 shell> gedit test.txt &
 ```
-## Gestion des zombis
+
+### 8. Gestion des zombis
